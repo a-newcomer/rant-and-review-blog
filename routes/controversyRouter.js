@@ -60,20 +60,20 @@ controversyRouter.put("/likes/:controversyId", (req, res, next) => {
 })
 
 // Delete/Update Controversy by deleting an upvote from a specific controversy
-controversyRouter.delete("/likes/:controversyId", (req, res, next) => {
-  Controversy.findOneAndDelete (
-    //{ _id: req.params.controversyId, upVotes: req.user._id },
-   console.log(req.user),
+// controversyRouter.delete("/likes/:controversyId", (req, res, next) => {
+//   Controversy.findOneAndDelete (
+//     //{ _id: req.params.controversyId, upVotes: req.user._id },
+//    console.log(req.user),
    
-    (err, deletedUpVote) => {
-      if(err){
-        res.status(500)
-        return next(err)
-      }
-      return res.status(201).send(deletedUpVote)
-    }
-  )
-})
+//     (err, deletedUpVote) => {
+//       if(err){
+//         res.status(500)
+//         return next(err)
+//       }
+//       return res.status(201).send(deletedUpVote)
+//     }
+//   )
+// })
 
 // Update Controversy with a userID to downvote array
 controversyRouter.put("/dislikes/:controversyId", (req, res, next) => {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { ControversyContext } from '../context/ControversyProvider.js'
 import CommentForm from './CommentForm.js'
 import CommentList from './CommentList.js'
@@ -7,8 +7,8 @@ import VoteHolder from './VoteHolder.js'
 //One way to keep this off the profile page is to detect the page and show conditionally.
 
 function Controversy(props) {
-const { usePathname } = useContext(ControversyContext)
-  const [commentToggle, setCommentToggle ] = useState( false );
+const { usePathname, commentToggle, changeToggle } = useContext(ControversyContext)
+  //const [commentToggle, setCommentToggle ] = useState( false );
   
   const {title, statement, imgUrl, _id, upVotes, downVotes, user} = props
   //console.log(" props in individual controversy:", props)
@@ -16,9 +16,6 @@ const { usePathname } = useContext(ControversyContext)
   return (
     <div className="controversy" key={_id} >
       {imgUrl ? <img src={imgUrl} alt={statement} /> : null}
-
-
-      
         {page == '/profile' ? 
         <h3>{title}</h3>
         :
@@ -38,12 +35,12 @@ const { usePathname } = useContext(ControversyContext)
         {
           !commentToggle ?
           <>
-          {page =='/public' && <button onClick={()=>setCommentToggle(prevInput => !prevInput)}>Add Your Thoughts</button>}
+          {page =='/public' && <button onClick={()=>changeToggle()}>Add Your Thoughts</button>}
           </>
           :
           <>
         <CommentForm reviewID={_id} />
-          <button onClick={()=>setCommentToggle(prevInput => !prevInput)}>cancel</button>
+          <button onClick={()=>changeToggle()}>cancel</button>
         </>
         }
         </div>

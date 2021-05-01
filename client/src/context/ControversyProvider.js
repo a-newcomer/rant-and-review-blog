@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 
@@ -26,6 +26,11 @@ const initialState = {
 }
 const [ reviewState, setReviewState] = useState(initialState)
 
+const [commentToggle, setCommentToggle ] = useState( false );
+
+// useEffect(()=> {
+//   getAllComments()
+// },[])
 function getAllReviews() {
   //the userAxios has the token in it now
   userAxios.get("/api/controversies")
@@ -93,10 +98,12 @@ function getAllComments() {
 function addComment(reviewID, newComment){
   userAxios.post(`/api/comments/${reviewID}`, newComment)
   .then(res => {
+    console.log(res.data)
     setReviewState(prevState => ({
       ...prevState,
-      comments: [...prevState.comments, newComment]
+      comments: [...prevState.comments, res.data]
     }))
+    setCommentToggle(prevToggle => !prevToggle)
   })
   //.catch(err => console.log(err.response.data.errMsg
   .catch(err => console.log(err))
@@ -107,8 +114,9 @@ const usePathname = () => {
   const location = useLocation()
   return location.pathname
 }
-
-
+function changeToggle() {
+setCommentToggle(prevInput => !prevInput)
+}
 //console.log("reviewState comments: ", reviewState.comments)
 
   return (
@@ -121,6 +129,8 @@ const usePathname = () => {
         addReview,
         getAllComments,
         addComment,
+        changeToggle,
+        commentToggle,
         usePathname
       }} >
       {props.children}
